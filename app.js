@@ -4,15 +4,31 @@ const form = document.querySelector('#add-cafe-form');
 // Create element and render cafe
 const renderCafe = (doc) => {
   let li = document.createElement('li');
+  console.log(li);
   let name = document.createElement('span');
   let city = document.createElement('span');
+  let cross = document.createElement('div');
   li.setAttribute('data-id', doc.id);
+
   name.textContent = doc.data().name;
   city.textContent = doc.data().city;
+  cross.textContent = 'x';
   li.appendChild(name);
   li.appendChild(city);
+  li.appendChild(cross);
 
   cafeList.appendChild(li);
+  // deleting data
+
+  cross.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const id = e.target.parentElement.getAttribute('data-id');
+    cross.parentElement.remove();
+
+    db.collection('cafes') // To find individual document from firebase we need to use doc method
+      .doc(id)
+      .delete();
+  });
 };
 
 db.collection('cafes')
