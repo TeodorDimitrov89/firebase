@@ -17,13 +17,13 @@ const renderCafe = (doc) => {
   li.appendChild(city);
   li.appendChild(cross);
 
-  cafeList.appendChild(li);
+  cafeList.prepend(li);
   // deleting data
 
   cross.addEventListener('click', (e) => {
     e.stopPropagation();
     const id = e.target.parentElement.getAttribute('data-id');
-    cross.parentElement.remove();
+    // cross.parentElement.remove();
 
     db.collection('cafes') // To find individual document from firebase we need to use doc method
       .doc(id)
@@ -42,16 +42,17 @@ const renderCafe = (doc) => {
 //   });
 
 // Making Queries
-db.collection('cafes')
-  .orderBy('createdAt', 'desc')
-  .get()
-  .then((snapshot) => {
-    // snapshot.docs is a collection of all our documents and we need to forEach method to access them
-    snapshot.docs.forEach((doc) => {
-      //doc.data() To get the actual data we need to access the data method
-      renderCafe(doc);
-    });
-  });
+// db.collection('cafes')
+//   .orderBy('createdAt', 'desc')
+//   .get()
+//   .then((snapshot) => {
+//     // snapshot.docs is a collection of all our documents and we need to forEach method to access them
+//     snapshot.docs.forEach((doc) => {
+//       //doc.data() To get the actual data we need to access the data method
+//       console.log(doc, 'doc');
+//       renderCafe(doc);
+//     });
+//   });
 
 // .collection("cafes")
 // .orderBy("", "desc")
@@ -68,3 +69,20 @@ form.addEventListener('submit', (e) => {
 
   form.reset();
 });
+
+// real time listener
+db.collection('cafes')
+  .orderBy('createdAt', 'asc')
+  .onSnapshot((snapshot) => {
+    let changes = snapshot.docChanges();
+    console.log(changes);
+    changes.forEach((change) => {
+      if (change.type === 'added') {
+        console.log(change.doc);
+        renderCafe(change.doc);
+      } else if (change.type === 'removed') {
+        let li = cafeList.querySelector('[data-id=' + change.doc.id + ']');
+        cafeList.removeChild(li);
+      }
+    });
+  });
