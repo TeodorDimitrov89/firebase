@@ -43,7 +43,7 @@ const renderCafe = (doc) => {
 
 // Making Queries
 db.collection('cafes')
-  .where('city', '==', 'Liverpool')
+  .orderBy('createdAt', 'desc')
   .get()
   .then((snapshot) => {
     // snapshot.docs is a collection of all our documents and we need to forEach method to access them
@@ -53,12 +53,17 @@ db.collection('cafes')
     });
   });
 
+// .collection("cafes")
+// .orderBy("", "desc")
+
 // Saving data
 form.addEventListener('submit', (e) => {
   e.preventDefault();
+  const createdAt = new Date().toString();
   db.collection('cafes').add({
     name: form.name.value,
     city: form.city.value,
+    createdAt,
   });
 
   form.reset();
