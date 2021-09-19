@@ -1,0 +1,22 @@
+{
+  "name": "firebase-tutorial",
+  "version": "1.0.0",
+  "description": "Firebase Database short tutorials",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeodorDimitrov89/firebase.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TeodorDimitrov89/firebase/issues"
+  },
+  "homepage": "https://github.com/TeodorDimitrov89/firebase#readme",
+  "dependencies": {
+    "firebase": "^9.0.2"
+  }
+}
