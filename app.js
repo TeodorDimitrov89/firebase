@@ -31,7 +31,19 @@ const renderCafe = (doc) => {
   });
 };
 
+// db.collection('cafes')
+//   .get()
+//   .then((snapshot) => {
+//     // snapshot.docs is a collection of all our documents and we need to forEach method to access them
+//     snapshot.docs.forEach((doc) => {
+//       //doc.data() To get the actual data we need to access the data method
+//       renderCafe(doc);
+//     });
+//   });
+
+// Making Queries
 db.collection('cafes')
+  .where('city', '==', 'Liverpool')
   .get()
   .then((snapshot) => {
     // snapshot.docs is a collection of all our documents and we need to forEach method to access them
